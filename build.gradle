@@ -1,4 +1,5 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'fabric-loom' version '0.7-SNAPSHOT'
     id 'maven-publish'
 }
@@ -14,6 +15,7 @@ repositories {
     maven { url 'https://jitpack.io/' }
 }
 
+build.dependsOn shadowJar
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -21,6 +23,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation 'com.github.ZeroMemes:Alpine:1.9'
+    shadow 'com.github.ZeroMemes:Alpine:1.9'
 }
 
 processResources {
@@ -53,6 +56,10 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
     from "LICENSE"
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
 }
 
 // configure the maven publication
