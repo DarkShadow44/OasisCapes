@@ -15,8 +15,6 @@ repositories {
     maven { url 'https://jitpack.io/' }
 }
 
-build.dependsOn shadowJar
-
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -60,6 +58,11 @@ jar {
 
 shadowJar {
     configurations = [project.configurations.shadow]
+}
+
+remapJar {
+	dependsOn shadowJar
+	input.set shadowJar.archiveFile.get()
 }
 
 // configure the maven publication
